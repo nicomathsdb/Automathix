@@ -1,0 +1,163 @@
+/* Variables graphiques existantes */
+:root {
+    --graph-text: #1f2937;
+    --graph-grid: #d1d5db;
+    --graph-curve: #2563eb;
+    --graph-line: #db2777;
+}
+
+.dark {
+    --graph-text: #d1d5db;
+    --graph-grid: #4b5563;
+    --graph-curve: #60a5fa;
+    --graph-line: #f472b6;
+}
+
+.jxgbox {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 1 / 1;
+    margin: auto;
+    border-radius: 8px;
+}
+
+.JXG_navigation {
+    position: absolute !important;
+    bottom: 0px !important;
+    right: 0px !important;
+    z-index: 1000 !important;
+    padding: 4px !important;
+    background-color: transparent !important;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.flip-card {
+            perspective: 1000px;
+			display:grid;
+        }
+        .flip-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+			display: grid;
+			grid-row: 1 / -1;
+            grid-column: 1 / -1;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            grid-row: 1 / -1;
+            grid-column: 1 / -1;
+            width: 100%;
+            
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            padding: 30px;
+        }
+        .flip-card-back {
+           transform: rotateY(180deg);  
+        }
+        .progress-bar {
+            position: relative;
+            height: 6px;
+        }
+        .progress-fill {
+            height: 100%;
+            transition: width 0.3s ease-in-out;
+        }
+        @media (max-width: 768px) {
+            .flashcard {
+                width: 90% !important;
+                min-height: 50vh !important;
+            }
+        }
+
+/* --- Styles pour le mode Jeu Interactif --- */
+
+.quiz-option-btn {
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+    position: relative;
+    user-select: none;
+}
+
+.quiz-option-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    background-color: #f0f9ff;
+}
+
+.dark .quiz-option-btn:hover:not(:disabled) {
+    background-color: #374151;
+}
+
+/* Feedback boutons */
+.quiz-correct {
+    background-color: #dcfce7 !important; /* Vert clair */
+    border-color: #22c55e !important;
+    color: #15803d !important;
+    transform: scale(1.02);
+}
+.dark .quiz-correct {
+    background-color: #064e3b !important;
+    border-color: #4ade80 !important;
+    color: #d1fae5 !important;
+}
+
+.quiz-wrong {
+    background-color: #fee2e2 !important; /* Rouge clair */
+    border-color: #ef4444 !important;
+    color: #b91c1c !important;
+    opacity: 0.7;
+    animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+}
+.dark .quiz-wrong {
+    background-color: #7f1d1d !important;
+    border-color: #f87171 !important;
+    color: #fee2e2 !important;
+}
+
+/* Désactivé */
+.quiz-option-btn:disabled {
+    cursor: default;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Animation pénalité */
+@keyframes floatUp {
+    0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+    20% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -150%) scale(1); opacity: 0; }
+}
+
+.animate-penalty {
+    animation: floatUp 1.5s ease-out forwards;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* Timer urgent */
+.timer-low {
+    background-color: #ef4444 !important; /* Rouge */
+    animation: pulse-red 1s infinite;
+}
+
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}

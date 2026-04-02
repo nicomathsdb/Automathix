@@ -1,0 +1,12 @@
+v3
+- changement noms des modes
+     classic --> playgound
+     chrono --> timeattack
+- cohérence bouton paramétrage du mode Time Attack
+- titre cliquable pour revenir à l'accueil
+
+v2
+- ajout bouton et logique mode sombre + header + footer
+- modification javascript, toutes les fonctions ne sont pas implémentées
+- changements visuels (boutons, ...) pour coller aux appli d'origine
+- cohérence des styles entre les modes de jeu
