@@ -1466,15 +1466,16 @@
                     // Distracteurs
                     const d1 = linearExpr(a - c, b - d); // Soustraction au lieu d'addition
                     const d2 = linearExpr(a + c, b - d); // Erreur signe constante
-                    const d3 = linearExpr(a + b + c + d, 0).replace('x',''); // Tout additionner sans x
-                    const d4 = linearExpr(a, d) // Mélange
+                    const d3 = b+d === 0 ? linearExpr(a+c !==0 ? a + c : a-c , 0).replace('x','') : linearExpr(a+b+c+d , 0) ; 
 
                     let opts = [
                         { text: `$${reduced}$`, isCorrect: true },
                         { text: `$${d1}$`, isCorrect: false },
                         { text: `$${d2}$`, isCorrect: false },
-                        { text: `$${(a+b+c+d)}x$`, isCorrect: false } 
+                        { text: `$${d3}$`, isCorrect: false } 
                     ];
+					// Nettoyage doublons
+                    opts = opts.filter((o,i,arr) => arr.findIndex(t => t.text === o.text) === i);
                     opts.sort(() => Math.random() - 0.5);
 
                     return { question: `Réduire : $${expr}$`, answer: `<p>$${reduced}$</p>`, options: opts };

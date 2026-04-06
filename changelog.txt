@@ -2,8 +2,12 @@ v3
 - changement noms des modes
      classic --> playgound
      chrono --> timeattack
-- cohérence bouton paramétrage du mode Time Attack
+- cohérence bouton paramétrage du mode Time Attack et boutons flashcard
+- repositionnement bouton tout sélectionner principal (grid)
 - titre cliquable pour revenir à l'accueil
+- dépliage/repliage automatique bouton "tout sélectionner" (sélection)
+- changement en "tout désélectionner" quand tout est sélectionné + style css rouge 
+- à l'affichage de la sélection les catégories sont dépliées si elles contiennent des questions cochées
 
 v2
 - ajout bouton et logique mode sombre + header + footer

@@ -64,10 +64,10 @@ function renderUI(appContainer) {
 				</div>
 
 				<div class="flex flex-wrap justify-center gap-3 mt-4">
-                    <button id="restart-btn" class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-full">
+                    <button id="restart-btn" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg transition">
                         <i class="fas fa-redo mr-2"></i>Recommencer
                     </button>
-                    <button id="quit-btn" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-full">
+                    <button id="quit-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-lg transition">
                         <i class="fas fa-sign-out-alt mr-2"></i>Quitter
                     </button>
                 </div>
@@ -281,12 +281,12 @@ function setupEventListeners(appContainer) {
     // Injection boutons Flashcard (si mode flashcard)
     if (appState.subMode === 'flashcard') {
         const btnKnown = document.createElement('button');
-        btnKnown.className = "btn-val bg-green-500 text-white px-5 py-2 rounded-full disabled:opacity-50 disabled:cursor-default hidden";   //classe btn-val pour sélection ; hidden par défaut
+        btnKnown.className = "btn-val bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-full disabled:opacity-50 disabled:cursor-default hidden";   //classe btn-val pour sélection ; hidden par défaut
         btnKnown.innerHTML = '<i class="fas fa-check mr-2"></i>Je connais';
         btnKnown.onclick = () => { playState.answers[playState.index] = {isCorrect: true}; playState.score++ ; next(); };
         
         const btnUnknown = document.createElement('button');
-        btnUnknown.className = "btn-val bg-red-500 text-white px-5 py-2 rounded-full disabled:opacity-50 disabled:cursor-default hidden";
+        btnUnknown.className = "btn-val bg-red-500 hover:bg-red-600  text-white px-5 py-2 rounded-full disabled:opacity-50 disabled:cursor-default hidden";
         btnUnknown.innerHTML = '<i class="fas fa-xmark mr-2"></i>Je ne connais pas';
         btnUnknown.onclick = () => { playState.answers[playState.index] = {isCorrect: false}; next();	}
         

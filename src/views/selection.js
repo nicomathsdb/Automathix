@@ -5,9 +5,9 @@ import { navigateTo, appState } from '../main.js';
 export function initSelection(appContainer) {
     appContainer.innerHTML = `
         <section class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 relative z-10">
-            <div class="flex justify-between items-center mb-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 mb-6">
                 <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">Sélection des automatismes</h2>
-                <button id="select-all-btn" class="bg-blue-100 text-blue-700 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800 px-4 py-2 rounded-full text-sm font-medium">
+                <button id="select-all-btn" class="sm:justify-self-end btn-state-select px-4 py-2 rounded text-sm font-medium">
                     <i class="fas fa-check-square mr-2"></i>Tout sélectionner
                 </button>
             </div>
@@ -24,36 +24,57 @@ export function initSelection(appContainer) {
 
     setupCategories(appContainer);
     setupEventListeners(appContainer);
+	refreshButtonsState(appContainer);
 }
 
+// --- Apparence bouton "tout sélectionner" ---
+function updateButtonDisplay(btn, isAllChecked) {
+    if (isAllChecked) {
+        btn.innerHTML = `<i class="fas fa-square-minus mr-2"></i>Tout désélectionner`;
+        btn.classList.remove('btn-state-select');    // voir CSS
+        btn.classList.add('btn-state-deselect');
+    } else {
+        btn.innerHTML = `<i class="fas fa-check-square mr-2"></i>Tout sélectionner`;
+        btn.classList.remove('btn-state-deselect');
+        btn.classList.add('btn-state-select');
+    }
+}
+
+
+function refreshButtonsState(appContainer) {
+    // 1. Boutons de catégories
+    const categoryContainers = appContainer.querySelectorAll('.category-item');
+    categoryContainers.forEach(catEl => {
+        const btn = catEl.querySelector('.select-category-btn');
+        const checkboxes = catEl.querySelectorAll('input[type="checkbox"]');
+        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+        updateButtonDisplay(btn, allChecked);
+    });
+
+    // 2. Bouton Global
+    const globalBtn = appContainer.querySelector('#select-all-btn');
+    const allCheckboxes = appContainer.querySelectorAll('input[type="checkbox"]');
+    const allGlobalChecked = Array.from(allCheckboxes).every(cb => cb.checked);
+    updateButtonDisplay(globalBtn, allGlobalChecked);
+}
+/////////////////////////////////////
+
+// création des catégories
 function setupCategories(appContainer) {
     const container = appContainer.querySelector('#categories-container');
     
     categories.forEach((category, catIndex) => {
-        // État de repliage (gardé dans appState si besoin, ou créé ici)
-        const isExpanded = false; 
+        // État de repliage
+        let isExpanded = false; 
         
         const categoryEl = document.createElement('div');
-        categoryEl.classList.add('bg-blue-50', 'dark:bg-gray-700/50', 'rounded-lg', 'overflow-hidden');
+        categoryEl.classList.add('bg-blue-50', 'dark:bg-gray-700/50', 'rounded-lg', 'overflow-hidden', 'category-item');
         
-        const header = document.createElement('div');
-        header.classList.add('flex', 'justify-between', 'items-center', 'p-4', 'cursor-pointer', 'bg-blue-100', 'dark:bg-gray-700');
         
-        header.innerHTML = `
-            <h3 class="font-bold text-blue-800 dark:text-blue-200">${category.name}</h3>
-            <div>
-                <button class="select-category-btn bg-blue-200 text-blue-700 hover:bg-blue-300 dark:bg-blue-800 dark:text-blue-300 dark:hover:bg-blue-700 px-3 py-1 mr-1 rounded text-xs">
-                    <i class="fas fa-check-circle mr-1"></i>Tout sélectionner
-                </button>
-                <span class="toggle-icon text-blue-700 dark:text-blue-300">
-                    <i class="fas fa-chevron-${isExpanded ? 'up' : 'down'}"></i>
-                </span>
-            </div>
-        `;
         
         const questionsContainer = document.createElement('div');
-        questionsContainer.classList.add('space-y-2', 'p-4');
-        questionsContainer.style.display = isExpanded ? 'block' : 'none';
+        questionsContainer.classList.add('category-div', 'space-y-2', 'p-4');
+        
         
         category.questions.forEach((question, index) => {
             const questionId = `${catIndex}-${index}`;
@@ -62,7 +83,10 @@ function setupCategories(appContainer) {
 			if (appState.selectedQuestions.length > 0){
 				// Si la question est déjà dans la liste, on met par défaut à checked
 				const allreadyCheck = appState.selectedQuestions.find((q) => q.category === category.name && q.indQ === index);
-				if (allreadyCheck)isChecked = 'checked';
+				if (allreadyCheck) {
+					isChecked = 'checked'; 
+					if(!isExpanded) isExpanded = true; 
+				}
 			}
             
             const questionEl = document.createElement('div');
@@ -73,6 +97,23 @@ function setupCategories(appContainer) {
             `;
             questionsContainer.appendChild(questionEl);
         });
+		
+		const header = document.createElement('div');
+        header.classList.add('flex', 'justify-between', 'items-center', 'p-4', 'cursor-pointer', 'bg-blue-100', 'dark:bg-gray-700');
+        
+        header.innerHTML = `
+            <h3 class="font-bold text-blue-800 dark:text-blue-200">${category.name}</h3>
+            <div>
+                <button class="select-category-btn btn-state-select px-3 py-1 mr-1 rounded text-xs">
+                    <i class="fas fa-check-circle mr-1"></i>Tout sélectionner
+                </button>
+                <span class="toggle-icon text-blue-700 dark:text-blue-300">
+                    <i class="fas fa-chevron-${isExpanded ? 'up' : 'down'}"></i>
+                </span>
+            </div>
+        `;
+		
+		questionsContainer.style.display = isExpanded ? 'block' : 'none';
         
         categoryEl.appendChild(header);
         categoryEl.appendChild(questionsContainer);
@@ -94,6 +135,11 @@ function setupCategories(appContainer) {
             const checkboxes = questionsContainer.querySelectorAll('input[type="checkbox"]');
             const areAllChecked = Array.from(checkboxes).every(cb => cb.checked);
             checkboxes.forEach(cb => cb.checked = !areAllChecked);
+			// si elles n'étaient pas sélectionné, on déplit sinon l'inverse
+			questionsContainer.style.display = !areAllChecked ? 'block' : 'none' ;
+			// et on change le sens du chevron
+			header.querySelector('.toggle-icon i').classList = !areAllChecked ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
+			refreshButtonsState(appContainer);
         });
     });
 }
@@ -104,6 +150,16 @@ function setupEventListeners(appContainer) {
         const checkboxes = appContainer.querySelectorAll('input[type="checkbox"]');
         const allChecked = Array.from(checkboxes).every(cb => cb.checked);
         checkboxes.forEach(cb => cb.checked = !allChecked);
+		// on déplit toutes les div des catégories au check, sinon on replit
+		appContainer.querySelectorAll('.category-div').forEach( (cont) => {
+			cont.style.display = !allChecked ? 'block' : 'none' ;
+		});
+		// sens chevron suivant div dépliée ou non
+		appContainer.querySelectorAll('.toggle-icon i').forEach( (icon) => {
+			icon.classList = !allChecked ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
+		});
+		refreshButtonsState(appContainer);
+
     });
 
     // Validation
