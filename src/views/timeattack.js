@@ -8,7 +8,6 @@ const playState = {
     totalAttempted: 0,
     duration: 120,
     remainingTime: 120,
-    timerInterval: null,
     startTime: 0,
 	thisIsRandom: true
 };
@@ -137,7 +136,7 @@ function startGame(appContainer) {
     appContainer.querySelector('#quit-game').addEventListener('click', endGame);
     
     // Lancer timer
-    playState.timerInterval = setInterval(() => {
+    appState.activeTimer = setInterval(() => {
         playState.remainingTime--;
         const timerEl = appContainer.querySelector('#digital-timer');
         timerEl.textContent = formatTime(playState.remainingTime);
@@ -221,7 +220,8 @@ function handleAnswer(isCorrect, btn, appContainer) {
 
 // --- VUE 4 : SCORE ---
 function endGame() {
-    clearInterval(playState.timerInterval);
+    clearInterval(appState.activeTimer);
+    appState.activeTimer = null;
     const elapsed = Math.round((Date.now() - playState.startTime) / 1000);
     
     const appContainer = document.getElementById('app');

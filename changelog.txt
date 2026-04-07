@@ -1,3 +1,11 @@
+v4
+- affichage dynamique de l'aide
+- bouton d'information pour chaque mode de jeu
+- lancer un nouveau jeu n'efface plus la sélection
+- bug : z-index des boutons aide et dark-mode en cas de superposition avec le titre
+- bug : interval qui continuait quand on quittait le mode Time Attack en cliquant sur le titre
+
+
 v3
 - changement noms des modes
      classic --> playgound

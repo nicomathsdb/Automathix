@@ -12,13 +12,19 @@ export const appState = {
     currentMode: null,     // mode de jeu
     subMode: null,         // 'flashcard' ou 'quiz' (pour le mode playground)
     isRandom: false,
-    selectedQuestions: [] // Stocke les questions choisies
+    selectedQuestions: [], // Stocke les questions choisies
+	activeTimer: null   // pour les jeux nécessitant un chrono
 };
 
 // Fonction centrale de navigation
 export function navigateTo(viewName) {
     const appContainer = document.getElementById('app');
     
+	// effacer un chrono en cours
+    if (appState.activeTimer) {
+        clearInterval(appState.activeTimer);
+        appState.activeTimer = null;
+    }
 
     appContainer.innerHTML = ''
 
@@ -70,40 +76,59 @@ function setupThemeToggle() {
 
 
 // Gestion de la modale d'aide
-        function setupHelpModal() {
-            const modal = document.getElementById('help-modal');
-            const openBtn = document.getElementById('help-toggle');
-            const closeBtn = document.getElementById('close-help-btn');
-            const closeBtnBottom = document.getElementById('close-help-btn-bottom');
-            const backdrop = document.getElementById('help-modal-backdrop');
+export function openModal(title, htmlContent) { 
+    const modal = document.getElementById('help-modal');
+    const titleEl = document.getElementById('help-modal-title');
+    const bodyEl = document.getElementById('help-modal-body');
 
-            const toggleModal = (show) => {
-                if (show) {
-                    modal.classList.remove('hidden');
-                    // Petit effet d'entrée
-                    modal.querySelector('.transform').classList.add('scale-100', 'opacity-100');
-                    modal.querySelector('.transform').classList.remove('scale-95', 'opacity-0');
-                } else {
-                    modal.classList.add('hidden');
-                }
-            };
-
-            openBtn.addEventListener('click', () => toggleModal(true));
-            closeBtn.addEventListener('click', () => toggleModal(false));
-            closeBtnBottom.addEventListener('click', () => toggleModal(false));
-            
-            // Fermer en cliquant en dehors
-            backdrop.addEventListener('click', () => alert('yo'));
-            
-            // Fermer avec la touche Echap
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-                    toggleModal(false);
-                }
-            });
-        }
+    titleEl.innerHTML = title;
+    bodyEl.innerHTML = htmlContent;
+    modal.classList.remove('hidden');
+}
 
 
+function setupHelpModal() {
+    const modal = document.getElementById('help-modal');
+    const closeBtn = document.getElementById('close-help-btn');
+	const closeBtnBottom = document.getElementById('close-help-btn-bottom');
+    const backdrop = document.getElementById('help-modal-backdrop');
+    const mainHelpToggle = document.getElementById('help-toggle');
+
+    const close = () => modal.classList.add('hidden');
+
+    closeBtn.addEventListener('click', close);
+	closeBtnBottom.addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+
+    // Le bouton d'aide du header affiche l'aide générale
+    mainHelpToggle.addEventListener('click', () => {
+        openModal('<i class="fas fa-info-circle mr-2"></i>Comment utiliser Automathix ?', `
+            <div>
+                            <h4 class="font-bold text-blue-600 dark:text-blue-400 mb-1">1. Mode de jeu</h4>
+                            <p>Choisissez votre mode de jeu dans le menu.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-blue-600 dark:text-blue-400 mb-1">2. Sélection</h4>
+                            <p>Choisissez les thèmes et les questions que vous souhaitez travailler en cochant les cases, puis cliquez sur <strong>Valider la sélection</strong>.</p>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-blue-600 dark:text-blue-400 mb-1">3. Organisation</h4>
+                            <p>Sur l'écran suivant, vous pouvez modifier l'ordre des questions par "glisser-déposer".</p>
+                        </div>						
+						<div>
+                            <h4 class="font-bold text-blue-600 dark:text-blue-400 mb-1">4. Lancement</h4>
+                            <p>Lancez la partie ou configurez le jeu, <strong>jouez !</strong></p>
+                        </div>
+						<p><i class="fas fa-lightbulb text-blue-600 mr-2"></i>Cliquez sur le titre pour revenir au menu depuis n'importe quelle page.</p>
+        `);
+    });
+}
+
+
+
+// titre cliquable pour retour menu
 function setupGlobalNavigation() {
     const title = document.getElementById('main-title');
     if (title) {
