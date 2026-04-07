@@ -235,6 +235,7 @@ function renderQuizOptions(appContainer, options) {
                 // setTimeout pour s'assurer que le layout est fait
                 setTimeout(() => {
                     renderQueue.forEach(renderFn => renderFn());
+					renderMath(appContainer);
                 }, 50);
 }
 

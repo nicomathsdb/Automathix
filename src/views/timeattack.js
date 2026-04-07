@@ -196,6 +196,7 @@ function loadGameQuestion(appContainer) {
     renderMath(appContainer);
     setTimeout(() => {
                 renderQueue.forEach(f => f());
+				renderMath(appContainer);
                 adjustMathFontSize();
             }, 50);
 }
