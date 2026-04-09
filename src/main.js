@@ -6,6 +6,7 @@ import { initSelection } from './views/selection.js';
 import { initOrder } from './views/order.js';
 import { initPlayground } from './views/playground.js';
 import { initTimeAttack } from './views/timeattack.js';
+import { adjustMathFontSize } from './data/questions.js';
 
 // État global partagé par toute l'application
 export const appState = {
@@ -151,3 +152,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Lancer la page d'accueil
     navigateTo('home');
 });
+
+// On crée une fonction réutilisable pour le redimensionnement
+function handleResize() {
+    clearTimeout(window.resizeTimer);
+    // On passe à 300ms pour laisser le temps au téléphone de tourner physiquement
+    window.resizeTimer = setTimeout(() => {
+        // On ajuste les textes et les maths
+        adjustMathFontSize();
+
+        
+    }, 300);
+}
+
+window.addEventListener("resize", handleResize);
+window.addEventListener('orientationchange', handleResize);

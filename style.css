@@ -71,20 +71,19 @@
             perspective: 1000px;
 			display:grid;
         }
-        .flip-card-inner {
+ .flip-card-inner {
             transition: transform 0.6s;
             transform-style: preserve-3d;
 			display: grid;
 			grid-row: 1 / -1;
             grid-column: 1 / -1;
         }
-        .flip-card.flipped .flip-card-inner {
+.flip-card.flipped .flip-card-inner {
             transform: rotateY(180deg);
         }
-        .flip-card-front, .flip-card-back {
+.flip-card-front, .flip-card-back {
             grid-row: 1 / -1;
             grid-column: 1 / -1;
-            width: 100%;
             
             backface-visibility: hidden;
             display: flex;
@@ -94,20 +93,20 @@
             border-radius: 15px;
             padding: 30px;
         }
-        .flip-card-back {
+.flip-card-back {
            transform: rotateY(180deg);  
         }
-        .progress-bar {
+.progress-bar {
             position: relative;
             height: 6px;
         }
-        .progress-fill {
+.progress-fill {
             height: 100%;
             transition: width 0.3s ease-in-out;
         }
-        @media (max-width: 768px) {
-            .flashcard {
-                width: 90% !important;
+@media (max-width: 768px) {
+    .flashcard {
+              /*  width: 90% !important; */
                 min-height: 50vh !important;
             }
         }
