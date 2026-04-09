@@ -4863,8 +4863,6 @@ $$`;
 			if (g === 1 && a>0 && b>0){
 				return '';
 			} else {
-				a_simp = a/g;
-				b_simp = b/g;
 			    return `= ${fracSign(a_simp,b_simp)}`;
 			}
 			

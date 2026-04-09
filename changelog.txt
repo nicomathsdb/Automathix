@@ -5,6 +5,7 @@ v4
 - bug : z-index des boutons aide et dark-mode en cas de superposition avec le titre
 - bug : interval qui continuait quand on quittait le mode Time Attack en cliquant sur le titre
 - bug : affichage du latex dans les propositions de réponses graphiques (QCM)
+- bug : fonction affFracSimp (question.js) avec des variables non définies
 
 
 v3
