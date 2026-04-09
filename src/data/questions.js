@@ -4863,7 +4863,7 @@ $$`;
 			if (g === 1 && a>0 && b>0){
 				return '';
 			} else {
-			    return `= ${fracSign(a_simp,b_simp)}`;
+			    return `= ${fracSign(a/g,b/g)}`;
 			}
 			
 		}
