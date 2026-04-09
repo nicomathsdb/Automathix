@@ -122,7 +122,7 @@ function startGame(appContainer) {
             <div class="w-full bg-white dark:bg-gray-800 rounded-xl shadow-xl p-6 min-h-[400px] flex flex-col relative overflow-hidden">
                 <div id="penalty" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl font-black text-red-500 opacity-0 pointer-events-none z-50"> -10s </div>
 				<div class="text-sm font-semibold text-blue-500 dark:text-blue-400 mb-2 uppercase tracking-wide text-center" id="game-category-badge">Catégorie</div>
-                <div id="game-question" class="my-auto py-4 text-xl md:text-2xl text-center text-gray-800 dark:text-gray-100 my-auto py-4""></div>
+                <div id="game-question" class="my-auto text-xl md:text-2xl text-center text-gray-800 dark:text-gray-100 my-auto pt-4"></div>
                 <div id="game-options" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6"></div>
             </div>
             <div class="mt-8">
