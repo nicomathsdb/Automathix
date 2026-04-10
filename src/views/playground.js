@@ -39,12 +39,12 @@ function renderUI(appContainer) {
 				<!-- Structure Flashcard -->
 				<div class="flashcard flip-card max-w-lg min-h-[400px] mb-8 cursor-pointer" id="main-flashcard">
 					<div class="flip-card-inner" id="flip-inner">
-						<div class="flip-card-front bg-blue-50 dark:bg-blue-900/40 flex flex-col justify-center items-center p-4 rounded-xl shadow-md border-2 border-blue-200 dark:border-blue-700">
+						<div class="flip-card-front bg-blue-50 dark:bg-blue-900 flex flex-col justify-center items-center p-4 rounded-xl shadow-md border-2 border-blue-200 dark:border-blue-700">
 						    <div class="text-lg text-blue-800 dark:text-blue-200 mb-4 font-semibold">Question</div>
 							<div id="question-content" class="text-gray-800 dark:text-gray-100 text-xl text-center"></div>
 							
 						</div>
-						<div class="flip-card-back bg-green-50 dark:bg-green-900/40 flex flex-col justify-center items-center p-4 rounded-xl shadow-md border-2 border-green-200 dark:border-green-700">
+						<div class="flip-card-back bg-green-50 dark:bg-green-900 flex flex-col justify-center items-center p-4 rounded-xl shadow-md border-2 border-green-200 dark:border-green-700">
 							<div class="text-lg text-green-800 dark:text-green-200 mb-4 font-semibold">Réponse</div>
 							<div id="answer-content" class="text-gray-800 dark:text-gray-100 text-xl text-center"></div>
 							
