@@ -5,6 +5,7 @@ const playState = {
     deck: [],
     index: 0,
     score: 0,
+	errors: 0,
     totalAttempted: 0,
     duration: 120,
     remainingTime: 120,
@@ -109,6 +110,7 @@ function startGame(appContainer) {
     
     playState.index = 0;
     playState.score = 0;
+	playState.errors = 0;
     playState.totalAttempted = 0;
     playState.remainingTime = playState.duration;
     playState.startTime = Date.now();
@@ -210,6 +212,7 @@ function handleAnswer(isCorrect, btn, appContainer) {
         playState.score++;
         setTimeout(() => { playState.index++; loadGameQuestion(appContainer); }, 400);
     } else {
+		playState.errors++;
         btn.classList.add('quiz-wrong');
         playState.remainingTime -= 10;
         const p = appContainer.querySelector('#penalty');
@@ -229,10 +232,28 @@ function endGame() {
     appContainer.innerHTML = `
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 text-center max-w-2xl mx-auto">
             <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">Score Final</h3>
-            <div class="w-40 h-40 mx-auto rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-5xl font-bold text-white shadow-lg mb-6">
-                ${playState.score}/${playState.totalAttempted}
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-10 mb-8">
+                <!-- Rond Bleu : Bonnes réponses -->
+                <div class="flex flex-col items-center">
+                    <div class="w-32 h-32 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-4xl font-bold text-white shadow-lg">
+                        ${playState.score}
+                    </div>
+                    <span class="mt-2 text-sm font-semibold text-blue-600 dark:text-blue-400 uppercase">Juste</span>
+                </div>
+
+                <!-- Rond Rouge : Erreurs -->
+                <div class="flex flex-col items-center">
+                    <div class="w-32 h-32 rounded-full bg-gradient-to-br from-red-400 to-red-600 flex items-center justify-center text-4xl font-bold text-white shadow-lg">
+                        ${playState.errors}
+                    </div>
+                    <span class="mt-2 text-sm font-semibold text-red-600 dark:text-red-400 uppercase">Faux</span>
+                </div>
             </div>
-            <div class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-8">en ${formatTime(elapsed)}</div>
+            
+            <div class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-8 border-t dark:border-gray-700 pt-6">
+                Temps total : <strong>${formatTime(elapsed)}</strong><br>
+                <span class="text-sm text-gray-500">Précision : ${playState.totalAttempted > 0 ? Math.round((playState.score / playState.totalAttempted) * 100) : 0}%</span>
+            </div>
 			<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
                 <button id="retry" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-4 rounded-lg transition">
                     <i class="fas fa-redo mr-2"></i>Recommencer

@@ -3,10 +3,13 @@ v4
 - bouton d'information pour chaque mode de jeu
 - lancer un nouveau jeu n'efface plus la sélection
 - adaptation du texte mathématiques (display mode + boutons) au resize de la fenêtre
+- Affichage du nombre d'erreurs dans le scrore du Time Attack
 - bug : z-index des boutons aide et dark-mode en cas de superposition avec le titre
 - bug : interval qui continuait quand on quittait le mode Time Attack en cliquant sur le titre
 - bug : affichage du latex dans les propositions de réponses graphiques (QCM)
 - bug : fonction affFracSimp (question.js) avec des variables non définies
+- bug : absence -webkit qui rendait visible katex de la face cachée des flashcard sur iphone
+- bug : transparence flashcard en mode sombre qui rendait visible katex de la face cachée
 
 
 v3
