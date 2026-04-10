@@ -84,7 +84,7 @@
 .flip-card-front, .flip-card-back {
             grid-row: 1 / -1;
             grid-column: 1 / -1;
-            
+            -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
             display: flex;
             flex-direction: column;
@@ -94,6 +94,7 @@
             padding: 30px;
         }
 .flip-card-back {
+	       -webkit-transform: rotateY(180deg);
            transform: rotateY(180deg);  
         }
 .progress-bar {
