@@ -6,6 +6,9 @@ import { initSelection } from './views/selection.js';
 import { initOrder } from './views/order.js';
 import { initPlayground } from './views/playground.js';
 import { initTimeAttack } from './views/timeattack.js';
+import { initChrono } from './views/chrono.js';
+import { initSurvivor } from './views/survivor.js';
+import { initReport } from './views/report.js';
 import { adjustMathFontSize } from './data/questions.js';
 
 // État global partagé par toute l'application
@@ -18,7 +21,7 @@ export const appState = {
 };
 
 // Fonction centrale de navigation
-export function navigateTo(viewName) {
+export function navigateTo(viewName, viewData = null) {
     const appContainer = document.getElementById('app');
     
 	// effacer un chrono en cours
@@ -34,6 +37,9 @@ export function navigateTo(viewName) {
         case 'home': 
             initHome(appContainer); 
             break;
+		case 'report': 
+		    initReport(appContainer, viewData); 
+			break;
         case 'selection': 
             initSelection(appContainer); 
             break;
@@ -44,7 +50,13 @@ export function navigateTo(viewName) {
             initPlayground(appContainer); 
             break;
         case 'timeattack': 
-            initTimeAttack(appContainer); 
+            initTimeAttack(appContainer, viewData); 
+            break;
+		case 'chrono': 
+            initChrono(appContainer, viewData); 
+            break;
+		case 'survivor': 
+            initSurvivor(appContainer, viewData); 
             break;
         default:
             console.error("Vue non trouvée : " + viewName);
@@ -122,6 +134,13 @@ function setupHelpModal() {
                             <h4 class="font-bold text-blue-600 dark:text-blue-400 mb-1">4. Lancement</h4>
                             <p>Lancez la partie ou configurez le jeu, <strong>jouez !</strong></p>
                         </div>
+						<div>
+                            <h4 class="font-bold text-blue-600 dark:text-blue-400 mb-1">5. Partage</h4>
+                            <p>
+								<strong>Défiez</strong> vos amis en partageant votre score à partir de l'écran de score.
+								<br/> Les défis s'ouvrent à partir du menu avec le bouton "Ouvrir un résultat".
+							</p>
+                        </div>
 						<p><i class="fas fa-lightbulb text-blue-600 mr-2"></i>Cliquez sur le titre pour revenir au menu depuis n'importe quelle page.</p>
         `);
     });
@@ -153,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navigateTo('home');
 });
 
-// On crée une fonction réutilisable pour le redimensionnement
+// fonction pour le redimensionnement
 function handleResize() {
     clearTimeout(window.resizeTimer);
     // On passe à 300ms pour laisser le temps au téléphone de tourner physiquement

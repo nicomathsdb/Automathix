@@ -1,3 +1,10 @@
+v5
+- possibilité de sauvegarder sur le rapport du time Attack (fichier json)
+- rajout bouton ouvrir un rapport dans le menu (fichier json)
+- possibilité de lancer le jeu avec les mêmes questions et paramètres depuis ce rapport
+- ajout du mode Chrono
+- ajout du mode Survivor
+
 v4
 - affichage dynamique de l'aide
 - bouton d'information pour chaque mode de jeu

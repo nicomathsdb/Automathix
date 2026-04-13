@@ -109,7 +109,23 @@ function renderActionArea(appContainer) {
     
     // Switch sur le mode choisi
     switch (appState.currentMode) {                 // classe action sur boutons pour sélection 
+	    case 'chrono':
+            container.innerHTML = `
+                <button id="action-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105 disabled:opacity-50 action">   
+                    <i class="fas fa-cogs mr-2"></i>Paramétrer la partie
+                </button>
+            `;
+            break;
+	
         case 'timeattack':
+            container.innerHTML = `
+                <button id="action-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105 disabled:opacity-50 action">   
+                    <i class="fas fa-cogs mr-2"></i>Paramétrer la partie
+                </button>
+            `;
+            break;
+			
+		case 'survivor':
             container.innerHTML = `
                 <button id="action-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition transform hover:scale-105 disabled:opacity-50 action">   
                     <i class="fas fa-cogs mr-2"></i>Paramétrer la partie
@@ -147,11 +163,6 @@ function renderActionArea(appContainer) {
             `;
             break;
 
-        /* Plus tard, ..... :
-        case 'duel':
-            container.innerHTML = '...';
-            break;
-        */
 
         default:
             container.innerHTML = '<p class="text-red-500">Mode non reconnu</p>';
@@ -168,8 +179,16 @@ function setupBaseEventListeners(appContainer) {
 function setupModeEventListeners(appContainer) {
     // On lie les événements aux boutons qui viennent d'être injectés
     switch (appState.currentMode) {
+		case 'chrono':
+            appContainer.querySelector('#action-btn').addEventListener('click', () => navigateTo('chrono'));
+            break;
+			
         case 'timeattack':
             appContainer.querySelector('#action-btn').addEventListener('click', () => navigateTo('timeattack'));
+            break;
+			
+		case 'survivor':
+            appContainer.querySelector('#action-btn').addEventListener('click', () => navigateTo('survivor'));
             break;
             
         case 'playground':

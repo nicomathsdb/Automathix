@@ -5030,36 +5030,25 @@ $$`;
         }
 
         export function adjustMathFontSize() { 
-		    const containers2 = document.querySelectorAll('.katex-display');
-            containers2.forEach(container => {
-                const content = container.parentElement;
+		    const displayC = document.querySelectorAll('.katex-display');
+            displayC.forEach(dis => {
+                const content = dis.parentElement;
                 if (!content) return;
                 content.style.transform = 'none';
 				content.style.marginBottom = '0px';
-				content.classList.add('inline-block');
-				container.classList.add('inline-block');
+				content.classList.add('inline-block');   // pour mesurer width
+				dis.classList.add('inline-block');
 				
-				const appC = document.querySelector('#app')
-				//const padding = document.querySelector('.flashcard') ? 128 : 80;
-				//let padding = 80;
+				const appC = document.querySelector('#app');
 				let ref = (appC.clientWidth - 80);
 				if (appC.querySelector('.flashcard')) {
-					//ref = (appC.clientWidth - 112);
-					//if((appC.clientWidth-112) <= 512){
 						ref = Math.min(appC.clientWidth - 112,512);
-						//document.getElementById('flip-inner').style.width = (appContainer.clientWidth-80)*0.9 + 'px';
-						//document.querySelector('.flip-card-front').style.width = (appContainer.clientWidth-80)*0.9 + 'px';
-						//document.querySelector('.flip-card-back').style.width = (appContainer.clientWidth-80)*0.9 + 'px';
 						appC.querySelector('#question-content').style.width = ref + 'px';
 						appC.querySelector('#answer-content').style.width = ref + 'px';
-						//ref = ((appC.clientWidth-80)*0.9 - 32);
-						
-					//};
 				};
 
                 const scale = Math.min(
                     ref / content.scrollWidth,
-                    //(container.parentElement.clientHeight - 5) / content.scrollHeight,
                     1
                 );
                 
@@ -5071,8 +5060,7 @@ $$`;
 					const scaledHeight = originalHeight * scale;
 					const spaceToTrim = originalHeight - scaledHeight;
             
-					// 3. On applique une marge négative pour "aspirer" le vide 
-					// et dire au parent que le bloc prend moins de place en hauteur
+					// On applique une marge négative pour "aspirer" le vide 
 					content.style.marginBottom = `-${spaceToTrim}px`;
                 }
             });
