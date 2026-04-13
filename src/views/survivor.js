@@ -51,9 +51,9 @@ function renderSettings(appContainer) {
             <div class="mb-10 max-w-md mx-auto">
                 <div class="flex justify-between mb-2">
                     <label class="font-bold text-gray-700 dark:text-gray-300">Temps par question</label>
-                    <span id="time-display" class="font-bold text-red-600 dark:text-red-400 text-xl">${playState.timePerQuestion}s</span>
+                    <span id="time-display" class="font-bold text-red-600 dark:text-red-400 text-xl">30s</span>
                 </div>
-                <input id="time-slider" type="range" min="10" max="60" step="5" value="${playState.timePerQuestion}" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                <input id="time-slider" type="range" min="10" max="60" step="5" value="30" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
             </div>
 
             <div class="mb-10 flex flex-col items-center">
